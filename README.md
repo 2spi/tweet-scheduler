@@ -8,7 +8,7 @@ A Flask-based web application that allows users to schedule tweets. The app util
 - **Spreadsheet Integration**: The app updates a spreadsheet using the gspread library, for the storage and tracking of tweet data.
 
 ## Getting Started
-To get started with the Tweet Scheduler Web App, follow these steps:
+To use the Tweet Scheduler Web App, follow these steps:
 
 1. Clone this repository to your local machine using the following command:
    ```bash
@@ -26,7 +26,8 @@ To get started with the Tweet Scheduler Web App, follow these steps:
 4. Set up your Google Sheets API credentials. Store as `gsheet-credentials.json`.
 5. Run the Flask app:
    ```bash
-   python app/main.py
+   export FLASK_APP=main/app.py
+   flask run
 6. Start the worker script (`tweet.py`):
    ```bash
    python tweet.py

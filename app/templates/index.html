@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tweet Scheduler App</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="icon" type="image/x-icon" href="https://visualpharm.com/assets/399/Twitter-595b40b75ba036ed117d6d81.svg">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+    <style type="text/css">
+        body {
+            background: linear-gradient(to bottom right, #122f75, #051029);
+            color: #fff;
+        }
+
+        h1,Tweet Scheduler
+        h2,
+        h3,
+        h4,
+        h5,
+        p,
+        span,
+        strike {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+        }
+
+        div.container {
+            padding: 30px;
+        }
+
+        #form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            background-color: #fff;
+            border-radius: 14px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+
+            justify-content: space-around;
+            align-items: flex-start;
+
+        }
+
+        #task-container {
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        #form-wrapper {
+            top: 0rem;
+            border-bottom: 1px solid #e9e9e9;
+            border-radius: 14px;
+            background-color: #fff;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+            padding: 40px;
+        }
+
+        #title {
+            margin-top: 4px;
+        }
+
+        #submit {
+            margin-top: 20px;
+            background-color: #1259fe;
+            border-radius: 5px;
+            border: 0;
+            color: #fff;
+        }
+
+        #delete {
+            color: red;
+        }
+
+        .flex-wrapper {
+            display: flex;
+        }
+
+        .task-wrapper {
+            cursor: pointer;
+            border-bottom: 1px solid #e9e9e9;
+            color: #686868;
+            margin: 5px;
+            padding: 20px;
+        }
+
+        .task-wrapper:hover {
+            background-color: #F0F0F0;
+        }
+
+        .div1 {
+            width: 50%;
+            float: left;
+        }
+        .div2 {
+            width: 50%;
+            float: right;
+        }
+        textarea {
+            resize: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="https://visualpharm.com/assets/399/Twitter-595b40b75ba036ed117d6d81.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Tweet Scheduler
+          </a>
+        </div>
+      </nav>
+
+    <div class="container">
+        <h1>Tweets Scheduled: <span class="badge bg-primary">{{ n_open_tweets }}</span></h1>
+        <div id="form-container" class="div1">
+            <div id="form-wrapper">
+                <form id="form" action="/tweet" method="post">
+                    <div class="flex: 6">
+                        <!-- <input id="title" class="form-control" type="text" name="content" placeholder="Write your tweet here!"> -->
+                        <textarea name="content" id="title" cols="46" rows="10" placeholder="Write your tweet here!"></textarea>
+                        <input id="title" class="form-control" type="text" name="time" placeholder="Time (YYYY-MM-DD hh:mm:ss)">
+                        <div class="text-center">
+                            <input id="submit" class="btn" type="submit" name="content" value="Insert tweet to queue">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="task-container" class="container div2">
+            <table class="table table-striped table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for tweet in tweets %}
+                    <tr>
+                        <td>{{tweet.time}}</td>
+                        <td>{{tweet.content}}</td>
+                        <td>
+                            {% if tweet.status %}
+                            Tweet posted.
+                            {% else %}
+                            Tweet in queue.
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/delete/{{ tweet.row_idx }}" class="align-middle btn btn-danger float-right text-right">
+                                x
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+
+</html>
